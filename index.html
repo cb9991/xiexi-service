@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东2a洗鞋订单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                    },
+                },
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 页面内容区域 -->
+    <div id="userPage" class="container mx-auto px-4 py-8 max-w-md flex-grow">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">东2a洗鞋</h1>
+
+            <form id="orderForm" class="space-y-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-700 mb-3">选择服务类型</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex flex-col items-start p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <div class="flex items-center w-full">
+                                <input type="radio" name="service" value="普通洗鞋" class="mr-2" checked>
+                                <div>
+                                    <div class="font-medium">普通洗鞋</div>
+                                    <div class="text-sm text-gray-500">5元/双</div>
+                                </div>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-600">基础清洁，去除表面灰尘污渍</div>
+                        </label>
+                        <label class="flex flex-col items-start p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <div class="flex items-center w-full">
+                                <input type="radio" name="service" value="精洗" class="mr-2">
+                                <div>
+                                    <div class="font-medium">精洗</div>
+                                    <div class="text-sm text-gray-500">10元/双</div>
+                                </div>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-600">使用优露清顽固污渍干洗剂深度清洁，顽固污渍一喷净，适合污渍较重的鞋子</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="dorm" class="block text-sm font-medium text-gray-700 mb-1">宿舍号</label>
+                        <input type="text" id="dorm" name="dorm" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+                        <input type="tel" id="phone" name="phone" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label for="pickupTime" class="block text-sm font-medium text-gray-700 mb-1">期望取鞋时间</label>
+                        <select id="pickupTime" name="pickupTime" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="今天中午">今天中午</option>
+                            <option value="今天晚上">今天晚上</option>
+                            <option value="明天中午">明天中午</option>
+                            <option value="明天晚上">明天晚上</option>
+                            <option value="自定义">自定义时间</option>
+                        </select>
+                        <input type="text" id="customPickupTime" name="customPickupTime" placeholder="请输入自定义取鞋时间" class="w-full px-4 py-2 border rounded-lg mt-2 focus:ring-2 focus:ring-primary focus:border-primary hidden">
+                    </div>
+                    <div>
+                        <label for="deliveryTime" class="block text-sm font-medium text-gray-700 mb-1">期望送鞋时间</label>
+                        <select id="deliveryTime" name="deliveryTime" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="工作日 12:00-14:00">工作日 12:00-14:00</option>
+                            <option value="工作日 19:00-21:00">工作日 19:00-21:00</option>
+                            <option value="周末 10:00-12:00">周末 10:00-12:00</option>
+                            <option value="周末 15:00-17:00">周末 15:00-17:00</option>
+                            <option value="周末 19:00-21:00">周末 19:00-21:00</option>
+                            <option value="自定义">自定义送鞋时间</option>
+                        </select>
+                        <input type="text" id="customDeliveryTime" name="customDeliveryTime" placeholder="请输入自定义送鞋时间" class="w-full px-4 py-2 border rounded-lg mt-2 focus:ring-2 focus:ring-primary focus:border-primary hidden">
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-700 mb-3">付款方式</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex flex-col items-start p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <div class="flex items-center w-full">
+                                <input type="radio" name="payment" value="洗完再付款" class="mr-2" checked>
+                                <div>
+                                    <div class="font-medium">洗完再付款</div>
+                                    <div class="text-sm text-gray-500">取鞋时当面支付，安全放心</div>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="flex flex-col items-start p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <div class="flex items-center w-full">
+                                <input type="radio" name="payment" value="提前转账" class="mr-2">
+                                <div>
+                                    <div class="font-medium">提前转账</div>
+                                    <div class="text-sm text-gray-500">下单后扫码支付，优先安排</div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+            </div>
+
+            <!-- 微信收款二维码 -->
+            <div id="qrCodeSection" class="hidden">
+                <div class="text-center p-4 border rounded-lg">
+                    <p class="text-sm text-gray-600 mb-3">下单后扫码转账，备注你的宿舍号</p>
+                    <div class="flex justify-center">
+                        <img id="qrCodeImage" src="E476B477011D9B92C9B5D6F4915BE674.jpg" alt="微信收款二维码" class="w-32 h-32 rounded-lg" crossorigin="anonymous">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+                    提交订单
+                </button>
+            </form>
+
+            <div id="successMessage" class="mt-6 p-4 bg-green-100 text-green-700 rounded-lg hidden text-center">
+                订单提交成功！我会在30分钟内联系你取鞋
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理员后台页面 -->
+    <div id="adminPage" class="container mx-auto px-4 py-8 max-w-2xl flex-grow hidden">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">东2a洗鞋 - 管理员后台</h1>
+
+            <!-- 批量操作按钮 -->
+            <div class="flex space-x-4 mb-6">
+                <button id="batchDeleteCompleted" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">
+                    批量删除已完成订单
+                </button>
+                <button id="clearAllOrders" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">
+                    清空全部订单
+                </button>
+            </div>
+
+            <div id="orderList" class="space-y-4">
+                <div class="text-center text-gray-500 py-10">暂无订单</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold text-center text-gray-800 mb-4">管理员登录</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <input type="password" id="password" name="password" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" id="closeLogin" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition">取消</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-white py-4 border-t">
+        <div class="container mx-auto px-4 text-center">
+            <!-- 营业时间公示 -->
+            <div class="mb-4 p-3 bg-gray-50 rounded-lg">
+                <p class="text-lg font-semibold text-gray-800 mb-2">🕒 营业时间</p>
+                <p class="text-sm text-gray-600">工作日：12:00 - 14:00</p>
+                <p class="text-sm text-gray-600">周末：19:00 - 21:00</p>
+            </div>
+
+
+            <button id="adminButton" class="mt-4 text-xs text-gray-400 hover:text-gray-600 transition">管理</button>
+        </div>
+    </footer>
+
+    <script>
+        // 本地存储键名
+        const STORAGE_KEY = 'shoe_cleaning_orders';
+
+        // 页面元素
+        const userPage = document.getElementById('userPage');
+        const adminPage = document.getElementById('adminPage');
+        const loginModal = document.getElementById('loginModal');
+        const orderForm = document.getElementById('orderForm');
+        const successMessage = document.getElementById('successMessage');
+        const adminButton = document.getElementById('adminButton');
+        const closeLogin = document.getElementById('closeLogin');
+        const loginForm = document.getElementById('loginForm');
+        const orderList = document.getElementById('orderList');
+
+        // 初始化订单数据
+        function initOrders() {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+            }
+        }
+
+        // 获取订单数据
+        function getOrders() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        }
+
+        // 保存订单数据
+        function saveOrders(orders) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+        }
+
+        // 添加订单
+        function addOrder(order) {
+            const orders = getOrders();
+            orders.unshift(order);
+            saveOrders(orders);
+        }
+
+        // 更新订单状态
+        function updateOrderStatus(id, status) {
+            const orders = getOrders();
+            const orderIndex = orders.findIndex(order => order.id === id);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = status;
+                saveOrders(orders);
+                renderOrderList();
+            }
+        }
+
+        // 删除订单
+        function deleteOrder(id) {
+            if (confirm('确定要删除这条订单吗？删除后无法恢复')) {
+                const orders = getOrders();
+                const updatedOrders = orders.filter(order => order.id !== id);
+                saveOrders(updatedOrders);
+                renderOrderList();
+            }
+        }
+
+        // 渲染订单列表
+        function renderOrderList() {
+            const orders = getOrders();
+
+            if (orders.length === 0) {
+                orderList.innerHTML = '<div class="text-center text-gray-500 py-10">暂无订单</div>';
+                return;
+            }
+
+            orderList.innerHTML = orders.map(order => `
+                <div class="border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="font-semibold">${order.service}</h3>
+                            <p class="text-sm text-gray-500">${order.time}</p>
+                        </div>
+                        <span class="px-2 py-1 rounded text-xs ${getStatusClass(order.status)}">${order.status}</span>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>宿舍号：</strong>${order.dorm}</p>
+                        <p><strong>联系电话：</strong>${order.phone}</p>
+                        <p><strong>期望取鞋时间：</strong>${order.pickupTime || '未指定'}</p>
+                        <p><strong>期望送鞋时间：</strong>${order.deliveryTime || '未指定'}</p>
+                        <p><strong>付款方式：</strong>${order.payment || '未指定'}</p>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="updateOrderStatus('${order.id}', '已取鞋')" class="flex-1 px-3 py-1 border rounded text-xs hover:bg-gray-50 transition">已取鞋</button>
+                        <button onclick="updateOrderStatus('${order.id}', '已完成')" class="flex-1 px-3 py-1 border rounded text-xs hover:bg-gray-50 transition">已完成</button>
+                        <button onclick="updateOrderStatus('${order.id}', '已取消')" class="flex-1 px-3 py-1 border rounded text-xs hover:bg-gray-50 transition">已取消</button>
+                        <button onclick="deleteOrder('${order.id}')" class="flex-1 px-3 py-1 border rounded text-xs hover:bg-gray-50 transition text-red-600 border-red-200 hover:bg-red-50">删除订单</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 获取状态对应的CSS类
+        function getStatusClass(status) {
+            switch (status) {
+                case '已取鞋':
+                    return 'bg-blue-100 text-blue-700';
+                case '已完成':
+                    return 'bg-green-100 text-green-700';
+                case '已取消':
+                    return 'bg-red-100 text-red-700';
+                default:
+                    return 'bg-gray-100 text-gray-700';
+            }
+        }
+
+        // 发送企业微信通知
+        function sendWechatNotification(order) {
+            // 企业微信机器人Webhook地址
+            const webhookUrl = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3087935f-293f-44b1-ae54-737ce3f9e4ba';
+
+            // 构建订单内容
+            const content = "新订单通知\n" +
+                           "服务类型：" + order.service + "\n" +
+                           "宿舍号：" + order.dorm + "\n" +
+                           "联系电话：" + order.phone + "\n" +
+                           "期望取鞋时间：" + (order.pickupTime || '未指定') + "\n" +
+                           "期望送鞋时间：" + (order.deliveryTime || '未指定') + "\n" +
+                           "付款方式：" + (order.payment || '未指定') + "\n" +
+                           "下单时间：" + order.time;
+
+            // 构建标准请求体
+            const requestBody = {
+                "msgtype": "text",
+                "text": {
+                    "content": content
+                }
+            };
+
+            console.log('准备发送微信通知:', requestBody);
+            console.log('请求URL:', webhookUrl);
+
+            // 发送请求（使用no-cors模式解决跨域问题）
+            fetch(webhookUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(function(response) {
+                console.log('响应状态:', response.status);
+                console.log('响应状态文本:', response.statusText);
+
+                // 由于使用no-cors模式，无法读取响应内容
+                // 假设请求成功
+                const successMessage = document.getElementById('successMessage');
+                successMessage.textContent = '订单提交成功！通知已发送到企业微信';
+                successMessage.classList.remove('hidden');
+                successMessage.classList.remove('bg-yellow-100', 'text-yellow-700');
+                successMessage.classList.add('bg-green-100', 'text-green-700');
+            })
+            .catch(function(error) {
+                console.error('微信通知发送失败:', error);
+                // 显示失败提示
+                const successMessage = document.getElementById('successMessage');
+                successMessage.textContent = '订单提交成功，但通知发送失败，请联系管理员';
+                successMessage.classList.remove('hidden');
+                successMessage.classList.remove('bg-green-100', 'text-green-700');
+                successMessage.classList.add('bg-yellow-100', 'text-yellow-700');
+            });
+        }
+
+        // 自定义取货时间输入框显示/隐藏逻辑
+        document.getElementById('pickupTime').addEventListener('change', function() {
+            const customPickupTimeInput = document.getElementById('customPickupTime');
+            if (this.value === '自定义') {
+                customPickupTimeInput.classList.remove('hidden');
+            } else {
+                customPickupTimeInput.classList.add('hidden');
+            }
+        });
+
+        // 自定义送鞋时间输入框显示/隐藏逻辑
+        document.getElementById('deliveryTime').addEventListener('change', function() {
+            const customDeliveryTimeInput = document.getElementById('customDeliveryTime');
+            if (this.value === '自定义') {
+                customDeliveryTimeInput.classList.remove('hidden');
+            } else {
+                customDeliveryTimeInput.classList.add('hidden');
+            }
+        });
+
+        // 付款方式选择逻辑
+        const paymentRadios = document.querySelectorAll('input[name="payment"]');
+        const qrCodeSection = document.getElementById('qrCodeSection');
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === '提前转账') {
+                    qrCodeSection.classList.remove('hidden');
+                } else {
+                    qrCodeSection.classList.add('hidden');
+                }
+            });
+        });
+
+        // 订单提交处理
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(orderForm);
+            let pickupTime = formData.get('pickupTime');
+            if (pickupTime === '自定义') {
+                pickupTime = formData.get('customPickupTime') || '自定义时间';
+            }
+
+            let deliveryTime = formData.get('deliveryTime');
+            if (deliveryTime === '自定义') {
+                deliveryTime = formData.get('customDeliveryTime') || '自定义时间';
+            }
+
+            const payment = formData.get('payment');
+
+            const order = {
+                id: Date.now().toString(),
+                service: formData.get('service'),
+                dorm: formData.get('dorm'),
+                phone: formData.get('phone'),
+                pickupTime: pickupTime,
+                deliveryTime: deliveryTime,
+                payment: payment,
+                time: new Date().toLocaleString('zh-CN'),
+                status: '待处理'
+            };
+
+            addOrder(order);
+            sendWechatNotification(order);
+
+            // 5秒后重置表单并隐藏消息
+            setTimeout(() => {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('hidden');
+                // 恢复消息样式
+                successMessage.classList.remove('bg-yellow-100', 'text-yellow-700');
+                successMessage.classList.add('bg-green-100', 'text-green-700');
+                orderForm.reset();
+                document.getElementById('customPickupTime').classList.add('hidden');
+                document.getElementById('customDeliveryTime').classList.add('hidden');
+            }, 5000);
+        });
+
+        // 管理按钮点击事件
+        adminButton.addEventListener('click', function() {
+            loginModal.classList.remove('hidden');
+        });
+
+        // 关闭登录模态框
+        closeLogin.addEventListener('click', function() {
+            loginModal.classList.add('hidden');
+        });
+
+        // 批量删除已完成订单
+        document.getElementById('batchDeleteCompleted').addEventListener('click', function() {
+            if (confirm('确定要删除所有已完成的订单吗？删除后无法恢复')) {
+                const orders = getOrders();
+                const updatedOrders = orders.filter(order => order.status !== '已完成');
+                saveOrders(updatedOrders);
+                renderOrderList();
+            }
+        });
+
+        // 清空全部订单
+        document.getElementById('clearAllOrders').addEventListener('click', function() {
+            if (confirm('确定要清空所有订单吗？删除后无法恢复')) {
+                saveOrders([]);
+                renderOrderList();
+            }
+        });
+
+        // 登录表单提交
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+
+            if (password === '123456') {
+                loginModal.classList.add('hidden');
+                userPage.classList.add('hidden');
+                adminPage.classList.remove('hidden');
+                renderOrderList();
+            } else {
+                alert('密码错误，请输入正确的密码');
+            }
+        });
+
+        // 初始化
+        initOrders();
+
+        // 将本地图片转换为Base64并替换
+        window.addEventListener('load', function() {
+            const img = document.getElementById('qrCodeImage');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const tempImg = new Image();
+            tempImg.crossOrigin = 'anonymous';
+            tempImg.onload = function() {
+                canvas.width = tempImg.width;
+                canvas.height = tempImg.height;
+                ctx.drawImage(tempImg, 0, 0);
+                const base64 = canvas.toDataURL('image/jpeg');
+                img.src = base64;
+                console.log('二维码已转换为Base64');
+            };
+            tempImg.onerror = function() {
+                console.log('图片加载失败，请确保E476B477011D9B92C9B5D6F4915BE674.jpg文件在同一目录下');
+            };
+            tempImg.src = img.src;
+        });
+    </script>
+</body>
+</html>
